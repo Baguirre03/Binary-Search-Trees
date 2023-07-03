@@ -12,32 +12,74 @@ class Node {
     setRight(node) {
         this.right = node
     }
-
-    insert(node) {
-        
-    }
 }
 
 class Tree {
     constructor(array) {
         this.array = array
+        this.sorted = this.sortArray()
+        this.tree = this.root()
     }
 
+    sortArray() {
+        let unqiue = [...new Set(this.array)];
+        unqiue.sort((a,b) => a-b)
+        return unqiue
+    }
+    //builds initial tree and stroes in this.tree for insert functions
     root() {
-        let unique = [...new Set(this.array)];
-        unique.sort((a,b) => a-b)
-        return prettyPrint(buildTree(unique, 0, unique.length - 1))
+        return buildTree(this.sorted, 0, this.sorted.length - 1)
+    }
+
+    insert(data) {
+        this.insertRec(this.tree, data)
+    }
+
+    insertRec(root, key) {
+        if(root == null) {
+            root = new Node(key)
+            return root
+        }
+        if (key < root.data) {
+            root.setLeft(this.insertRec(root.left, key))
+        } else if (key > root.data) {
+            root.setRight(this.insertRec(root.right, key))
+        }
+        return this.tree = root
+    }
+
+    delete(key) {
+        this.deleteRec(this.tree, key)
+    }
+
+    deleteRec(root, key) {
+        console.log(root.data, key)
+        if(root === null) {
+            return root
+        }
+
+        if(root.data > key) {
+            root.setLeft(this.deleteRec(root.left, key))
+            return root
+        } else if (root.data < key) {
+            root.setRight(this.deleteRec(root.right, key))
+            return root
+        }
+        root = null
+        return root
     }
 }
 
 function buildTree(array, start, end) {
     let mid = parseInt((start + end) / 2)
     let node = new Node(array[mid])
+
     if(start > end) {
         return null
     }
     node.setLeft(buildTree(array, start, mid - 1))
     node.setRight(buildTree(array, mid + 1, end))
+
     return node
 }
 
@@ -54,5 +96,9 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
   }
 };
 
-const tree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67])
-tree.root()
+// const tree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67])
+// const tree = new Tree([2, 5, 3, 10, 20])
+const tree = new Tree([1, 2, 3, 4, 10])
+prettyPrint(tree.tree)
+tree.delete(4)
+prettyPrint(tree.tree)
