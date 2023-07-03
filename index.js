@@ -53,7 +53,6 @@ class Tree {
     }
 
     deleteRec(root, key) {
-        console.log(root.data, key)
         if(root === null) {
             return root
         }
@@ -65,9 +64,50 @@ class Tree {
             root.setRight(this.deleteRec(root.right, key))
             return root
         }
-        root = null
-        return root
+
+        if(root.left === null) {
+            let temp = root.right
+            root = null
+            return temp
+        } else if(root.right === null) {
+            let temp = root.left
+            root = null
+            return temp
+        } else {
+            let succParent = root
+            let succ = root.right
+            while(succ.left !== null) {
+                succParent = succ
+                succ = succ.left
+            }
+            if(succParent !== root) {
+                succParent.left = succ.right
+            } else {
+                succParent.right = succ.right
+            }
+            root.data = succ.data
+            succ = null
+            return root
+        }
     }
+
+    find(value) {
+        this.findRec(this.tree, value)
+    }
+
+    findRec(root, key) {
+        if(root.data === key) {
+            console.log(root)
+            return root
+        }
+        if (root.data > key) {
+            this.findRec(root.left, key)
+            return root
+        } else if (root.data < key) {
+            this.findRec(root.right, key)
+            return root
+        }
+     }
 }
 
 function buildTree(array, start, end) {
@@ -96,9 +136,12 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
   }
 };
 
-// const tree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67])
+const tree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67])
 // const tree = new Tree([2, 5, 3, 10, 20])
-const tree = new Tree([1, 2, 3, 4, 10])
+// const tree = new Tree([10, 20, 30, 40, 50, 60])
 prettyPrint(tree.tree)
-tree.delete(4)
+// tree.insert(55)
+// tree.insert(100)
+// tree.delete(7)
+tree.find(67)
 prettyPrint(tree.tree)
