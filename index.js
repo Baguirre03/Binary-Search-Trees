@@ -12,6 +12,10 @@ class Node {
     setRight(node) {
         this.right = node
     }
+
+    insert(node) {
+        
+    }
 }
 
 class Tree {
@@ -20,9 +24,9 @@ class Tree {
     }
 
     root() {
-        this.array.sort((a,b) => a-b)
-        return prettyPrint(buildTree(this.array, 0, this.array.length - 1))
-        // return buildTree(this.array, 0, this.array.length - 1)
+        let unique = [...new Set(this.array)];
+        unique.sort((a,b) => a-b)
+        return prettyPrint(buildTree(unique, 0, unique.length - 1))
     }
 }
 
@@ -50,7 +54,5 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
   }
 };
 
-const tree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
-// const tree = new Tree([1,2,3, 4, 5])
-console.log(tree.root())
-// tree.root()
+const tree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67])
+tree.root()
