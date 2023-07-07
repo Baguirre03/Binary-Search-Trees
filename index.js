@@ -26,6 +26,7 @@ class Tree {
         unqiue.sort((a,b) => a-b)
         return unqiue
     }
+
     //builds initial tree and stroes in this.tree for insert functions
     root() {
         return buildTree(this.sorted, 0, this.sorted.length - 1)
@@ -108,6 +109,25 @@ class Tree {
             return root
         }
      }
+
+     levelOrder(tree, queue = [tree]) {
+        console.log(tree === this.root())
+        if(tree === this.root()) {
+            return this.array
+        }
+        if (queue.length == 0) {
+            return 
+        }
+        queue.splice(0, 1)
+        if(tree == null) {
+            return this.levelOrder(queue[0], queue)
+        }
+        console.log(tree.data)
+        queue.push(tree.left, tree.right)
+        this.levelOrder(queue[0], queue)
+        return 
+
+     }
 }
 
 function buildTree(array, start, end) {
@@ -136,12 +156,13 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
   }
 };
 
-const tree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67])
-// const tree = new Tree([2, 5, 3, 10, 20])
+// const tree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 132, 213, 3333, 213254,34])
+const tree = new Tree([2, 5, 3, 10, 20])
 // const tree = new Tree([10, 20, 30, 40, 50, 60])
 prettyPrint(tree.tree)
 // tree.insert(55)
 // tree.insert(100)
 // tree.delete(7)
-tree.find(67)
-prettyPrint(tree.tree)
+// tree.find(132)
+// console.log(tree.levelOrder(tree.root()))
+tree.levelOrder(tree.root())
