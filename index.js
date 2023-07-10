@@ -23,7 +23,7 @@ class Tree {
 
     sortArray() {
         let unqiue = [...new Set(this.array)];
-        unqiue.sort((a,b) => a-b)
+        unqiue.sort((a,b) => a - b)
         return unqiue
     }
 
@@ -111,22 +111,20 @@ class Tree {
      }
 
      levelOrder(tree, queue = [tree]) {
-        console.log(tree === this.root())
-        if(tree === this.root()) {
+        if(typeof tree != typeof this.root()) {
             return this.array
         }
-        if (queue.length == 0) {
-            return 
-        }
-        queue.splice(0, 1)
         if(tree == null) {
+            queue.splice(0,1)
             return this.levelOrder(queue[0], queue)
         }
+        queue.splice(0,1)
         console.log(tree.data)
         queue.push(tree.left, tree.right)
+        if(!queue.length) {
+            return
+        }
         this.levelOrder(queue[0], queue)
-        return 
-
      }
 }
 
