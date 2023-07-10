@@ -111,20 +111,30 @@ class Tree {
      }
 
      levelOrder(tree, queue = [tree]) {
-        if(typeof tree != typeof this.root()) {
+        if(!queue.length) {
+            return 
+        }
+        if(!tree) {
             return this.array
         }
-        if(tree == null) {
-            queue.splice(0,1)
+
+        console.log(tree.data)
+        queue.splice(0,1)
+
+        if(tree.left == null && tree.right == null) {
             return this.levelOrder(queue[0], queue)
         }
-        queue.splice(0,1)
-        console.log(tree.data)
-        queue.push(tree.left, tree.right)
-        if(!queue.length) {
-            return
+        if(tree.left == null) {
+            queue.push(tree.right)
+            return this.levelOrder(queue[0], queue)
         }
-        this.levelOrder(queue[0], queue)
+        if(tree.right == null) {
+            queue.push(tree.left)
+            return this.levelOrder(queue[0], queue)
+        }
+        
+        queue.push(tree.left, tree.right)
+        return this.levelOrder(queue[0], queue)
      }
 }
 
@@ -154,7 +164,7 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
   }
 };
 
-// const tree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 132, 213, 3333, 213254,34])
+// const tree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 132, 213])
 const tree = new Tree([2, 5, 3, 10, 20])
 // const tree = new Tree([10, 20, 30, 40, 50, 60])
 prettyPrint(tree.tree)
