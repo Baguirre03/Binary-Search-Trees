@@ -111,7 +111,6 @@ class Tree {
      }
 
      levelOrder(tree, queue = [tree]) {
-        console.log(tree === this.root())
         if(tree === this.root()) {
             return this.array
         }
