@@ -112,7 +112,7 @@ class Tree {
 
      levelOrder(tree, queue = [tree]) {
         if(!queue.length) {
-            return 
+            return tree
         }
         if(!tree) {
             return this.array
@@ -136,7 +136,44 @@ class Tree {
         queue.push(tree.left, tree.right)
         return this.levelOrder(queue[0], queue)
      }
+
+     inorder(tree) {
+        if(!tree) {
+            return this.array
+        }
+        if (tree == null) {
+            return
+        }
+        this.inorder(tree.left)
+        console.log(tree.data)
+        this.inorder(tree.right)
+     }
+
+     preorder(tree) {
+        if(!tree) {
+            return this.array
+        }
+        if(tree == null) {
+            return
+        }
+        console.log(tree.data)
+        this.preorder(tree.left)
+        this.preorder(tree.right)
+     }
+
+     postorder(tree) {
+        if(!tree) {
+            return this.array
+        }
+        if(tree == null) {
+            return
+        }
+        this.postorder(tree.left)
+        this.postorder(tree.right)
+        console.log(tree.data)
+     }
 }
+
 
 function buildTree(array, start, end) {
     let mid = parseInt((start + end) / 2)
@@ -164,13 +201,15 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
   }
 };
 
-// const tree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 132, 213])
-const tree = new Tree([2, 5, 3, 10, 20])
-// const tree = new Tree([10, 20, 30, 40, 50, 60])
+// const tree = new Tree([1, 2, 6,7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 132, 213])
+// const tree = new Tree([2, 5, 3, 10, 20])
+const tree = new Tree([10, 20, 30, 40, 50, 60, 5])
 prettyPrint(tree.tree)
 // tree.insert(55)
 // tree.insert(100)
 // tree.delete(7)
 // tree.find(132)
-// console.log(tree.levelOrder(tree.root()))
-tree.levelOrder(tree.root())
+// tree.levelOrder(tree.root())
+// tree.inorder(tree.root())
+// tree.preorder(tree.root())
+tree.postorder(tree.root())
