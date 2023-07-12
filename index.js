@@ -172,6 +172,39 @@ class Tree {
         this.postorder(tree.right)
         console.log(tree.data)
      }
+
+     height(node) {
+        this.heightRec(this.tree, node)
+    }
+    
+    heightRec(tree, node, counter = 0) {
+        if (tree == null) {
+            return counter
+        }
+        if(tree.data == node) {
+            this.heightRec(tree.left, node, counter = 0)
+            this.heightRec(tree.right, node, counter = 0)
+        }
+        this.heightRec(tree.right, node, counter)
+        this.heightRec(tree.left, node, counter)
+        return 
+    }
+
+    depth(node) {
+        return this.depthRec(this.tree, node)
+    }
+
+    depthRec(tree, node, counter = 0) {
+        if (tree == null) {
+            return 0
+        }
+        if(tree.data == node) {
+            return console.log(counter + 1)
+        }
+        this.depthRec(tree.left, node, counter + 1)
+        this.depthRec(tree.right, node, counter + 1)
+        return
+    }
 }
 
 
@@ -212,4 +245,6 @@ prettyPrint(tree.tree)
 // tree.levelOrder(tree.root())
 // tree.inorder(tree.root())
 // tree.preorder(tree.root())
-tree.postorder(tree.root())
+// tree.postorder(tree.root())
+tree.depth(20)
+
