@@ -189,6 +189,7 @@ class Tree {
         let left = this.heightRec(tree.left, node, found)
         let right = this.heightRec(tree.right, node, found)
         console.log(left, right)
+        console.log(Math.max(left, right) + 1)
         return Math.max(left, right) + 1
     }
 
@@ -236,9 +237,9 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
     }
 };
 
-const tree = new Tree([1, 2, 6, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 132, 213])
+// const tree = new Tree([1, 2, 6, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 132, 213])
 // const tree = new Tree([2, 5, 3, 10, 20])
-// const tree = new Tree([10, 20, 30, 40, 50, 60, 5, 123])
+const tree = new Tree([10, 20, 30, 40, 50, 60, 5, 123])
 prettyPrint(tree.tree)
 // tree.insert(55)
 // tree.insert(100)
@@ -249,7 +250,7 @@ prettyPrint(tree.tree)
 // tree.preorder(tree.root())
 // tree.postorder(tree.root())
 // tree.height(50)
-console.log(tree.height(23))
-// tree.height(50)
+console.log(tree.height(50))
+tree.height(50)
 // tree.depth(123)
 
