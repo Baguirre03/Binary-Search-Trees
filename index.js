@@ -23,7 +23,7 @@ class Tree {
 
     sortArray() {
         let unqiue = [...new Set(this.array)];
-        unqiue.sort((a,b) => a - b)
+        unqiue.sort((a, b) => a - b)
         return unqiue
     }
 
@@ -37,7 +37,7 @@ class Tree {
     }
 
     insertRec(root, key) {
-        if(root == null) {
+        if (root == null) {
             root = new Node(key)
             return root
         }
@@ -54,11 +54,11 @@ class Tree {
     }
 
     deleteRec(root, key) {
-        if(root === null) {
+        if (root === null) {
             return root
         }
 
-        if(root.data > key) {
+        if (root.data > key) {
             root.setLeft(this.deleteRec(root.left, key))
             return root
         } else if (root.data < key) {
@@ -66,22 +66,22 @@ class Tree {
             return root
         }
 
-        if(root.left === null) {
+        if (root.left === null) {
             let temp = root.right
             root = null
             return temp
-        } else if(root.right === null) {
+        } else if (root.right === null) {
             let temp = root.left
             root = null
             return temp
         } else {
             let succParent = root
             let succ = root.right
-            while(succ.left !== null) {
+            while (succ.left !== null) {
                 succParent = succ
                 succ = succ.left
             }
-            if(succParent !== root) {
+            if (succParent !== root) {
                 succParent.left = succ.right
             } else {
                 succParent.right = succ.right
@@ -93,11 +93,11 @@ class Tree {
     }
 
     find(value) {
-        this.findRec(this.tree, value)
+        return this.findRec(this.tree, value)
     }
 
     findRec(root, key) {
-        if(root.data === key) {
+        if (root.data === key) {
             console.log(root)
             return root
         }
@@ -108,37 +108,37 @@ class Tree {
             this.findRec(root.right, key)
             return root
         }
-     }
+    }
 
-     levelOrder(tree, queue = [tree]) {
-        if(!queue.length) {
+    levelOrder(tree, queue = [tree]) {
+        if (!queue.length) {
             return tree
         }
-        if(!tree) {
+        if (!tree) {
             return this.array
         }
 
         console.log(tree.data)
-        queue.splice(0,1)
+        queue.splice(0, 1)
 
-        if(tree.left == null && tree.right == null) {
+        if (tree.left == null && tree.right == null) {
             return this.levelOrder(queue[0], queue)
         }
-        if(tree.left == null) {
+        if (tree.left == null) {
             queue.push(tree.right)
             return this.levelOrder(queue[0], queue)
         }
-        if(tree.right == null) {
+        if (tree.right == null) {
             queue.push(tree.left)
             return this.levelOrder(queue[0], queue)
         }
-        
+
         queue.push(tree.left, tree.right)
         return this.levelOrder(queue[0], queue)
-     }
+    }
 
-     inorder(tree) {
-        if(!tree) {
+    inorder(tree) {
+        if (!tree) {
             return this.array
         }
         if (tree == null) {
@@ -147,47 +147,49 @@ class Tree {
         this.inorder(tree.left)
         console.log(tree.data)
         this.inorder(tree.right)
-     }
+    }
 
-     preorder(tree) {
-        if(!tree) {
+    preorder(tree) {
+        if (!tree) {
             return this.array
         }
-        if(tree == null) {
+        if (tree == null) {
             return
         }
         console.log(tree.data)
         this.preorder(tree.left)
         this.preorder(tree.right)
-     }
+    }
 
-     postorder(tree) {
-        if(!tree) {
+    postorder(tree) {
+        if (!tree) {
             return this.array
         }
-        if(tree == null) {
+        if (tree == null) {
             return
         }
         this.postorder(tree.left)
         this.postorder(tree.right)
         console.log(tree.data)
-     }
+    }
 
-     height(node) {
+    height(node) {
         this.heightRec(this.tree, node)
     }
-    
-    heightRec(tree, node, counter = 0) {
-        if (tree == null) {
-            return counter
+
+    heightRec(tree, node, found = false) {
+        if (found === false) {
+            tree = this.find(node)
+            found = true
+            return this.heightRec(tree, node, found)
         }
-        if(tree.data == node) {
-            this.heightRec(tree.left, node, counter = 0)
-            this.heightRec(tree.right, node, counter = 0)
+        if (tree == null || (tree.left == null && tree.right == null)) {
+            return 0
         }
-        this.heightRec(tree.right, node, counter)
-        this.heightRec(tree.left, node, counter)
-        return 
+        let left = this.heightRec(tree.left, node, found)
+        let right = this.heightRec(tree.right, node, found)
+        console.log(left, right)
+        return Math.max(left, right) + 1
     }
 
     depth(node) {
@@ -198,7 +200,7 @@ class Tree {
         if (tree == null) {
             return 0
         }
-        if(tree.data == node) {
+        if (tree.data == node) {
             return console.log(counter + 1)
         }
         this.depthRec(tree.left, node, counter + 1)
@@ -212,7 +214,7 @@ function buildTree(array, start, end) {
     let mid = parseInt((start + end) / 2)
     let node = new Node(array[mid])
 
-    if(start > end) {
+    if (start > end) {
         return null
     }
     node.setLeft(buildTree(array, start, mid - 1))
@@ -222,21 +224,21 @@ function buildTree(array, start, end) {
 }
 
 const prettyPrint = (node, prefix = "", isLeft = true) => {
-  if (node === null) {
-    return;
-  }
-  if (node.right !== null) {
-    prettyPrint(node.right, `${prefix}${isLeft ? "│   " : "    "}`, false);
-  }
-  console.log(`${prefix}${isLeft ? "└── " : "┌── "}${node.data}`);
-  if (node.left !== null) {
-    prettyPrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true);
-  }
+    if (node === null) {
+        return;
+    }
+    if (node.right !== null) {
+        prettyPrint(node.right, `${prefix}${isLeft ? "│   " : "    "}`, false);
+    }
+    console.log(`${prefix}${isLeft ? "└── " : "┌── "}${node.data}`);
+    if (node.left !== null) {
+        prettyPrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true);
+    }
 };
 
-// const tree = new Tree([1, 2, 6,7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 132, 213])
+const tree = new Tree([1, 2, 6, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 132, 213])
 // const tree = new Tree([2, 5, 3, 10, 20])
-const tree = new Tree([10, 20, 30, 40, 50, 60, 5])
+// const tree = new Tree([10, 20, 30, 40, 50, 60, 5, 123])
 prettyPrint(tree.tree)
 // tree.insert(55)
 // tree.insert(100)
@@ -246,5 +248,8 @@ prettyPrint(tree.tree)
 // tree.inorder(tree.root())
 // tree.preorder(tree.root())
 // tree.postorder(tree.root())
-tree.depth(20)
+// tree.height(50)
+console.log(tree.height(23))
+// tree.height(50)
+// tree.depth(123)
 
