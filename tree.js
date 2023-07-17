@@ -27,7 +27,7 @@ class Tree {
         return unqiue
     }
 
-    //builds initial tree and stroes in this.tree for insert functions
+    //builds initial tree and stores in this.tree for insert functions
     root() {
         return buildTree(this.sorted, 0, this.sorted.length - 1)
     }
@@ -98,7 +98,6 @@ class Tree {
 
     findRec(root, key) {
         if (root.data === key) {
-            console.log(root)
             return root
         }
         if (root.data > key) {
@@ -188,6 +187,7 @@ class Tree {
         }
         let left = this.heightRec(tree.left, node, found)
         let right = this.heightRec(tree.right, node, found)
+        // console.log('tree', tree.data)
         return Math.max(left, right) + 1
     }
 
@@ -207,13 +207,16 @@ class Tree {
         return
     }
 
-    isBalanced() {
-        const difference = this.heightRec(this.tree.left) - this.heightRec(this.tree.right)
-        if (difference > 1) {
-            return false
-        } else {
-            return true
-        }
+    isBalanced(root = this.tree) {
+        console.log(root.left.data)
+        const left = this.height(root.left.data)
+        const right = this.height(root.right.data)
+        console.log(left)
+    }
+
+    rebalance() {
+        this.array = this.inorder()
+        return this.tree = this.root()
     }
 }
 
@@ -244,22 +247,5 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
     }
 };
 
-// const tree = new Tree([1, 2, 6, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 132, 213])
-// const tree = new Tree([2, 5, 3, 10, 20])
-const tree = new Tree([10, 20, 30, 40, 50, 60, 5, 123])
-prettyPrint(tree.tree)
-// tree.insert(55)
-// tree.insert(100)
-// tree.delete(7)
-// tree.find(132)
-// tree.levelOrder(tree.root())
-// tree.inorder(tree.root())
-// tree.preorder(tree.root())
-// tree.postorder(tree.root())
-// tree.height(50)
-// console.log(tree.height(50))
-// tree.height(50)
-// tree.depth(123)
-// tree.isBalanced()
-// console.log(tree.isBalanced())
 
+export { Tree, prettyPrint }
