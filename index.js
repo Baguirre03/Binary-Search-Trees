@@ -174,7 +174,7 @@ class Tree {
     }
 
     height(node) {
-        this.heightRec(this.tree, node)
+        return this.heightRec(this.tree, node)
     }
 
     heightRec(tree, node, found = false) {
@@ -188,8 +188,6 @@ class Tree {
         }
         let left = this.heightRec(tree.left, node, found)
         let right = this.heightRec(tree.right, node, found)
-        console.log(left, right)
-        console.log(Math.max(left, right) + 1)
         return Math.max(left, right) + 1
     }
 
@@ -207,6 +205,15 @@ class Tree {
         this.depthRec(tree.left, node, counter + 1)
         this.depthRec(tree.right, node, counter + 1)
         return
+    }
+
+    isBalanced() {
+        const difference = this.heightRec(this.tree.left) - this.heightRec(this.tree.right)
+        if (difference > 1) {
+            return false
+        } else {
+            return true
+        }
     }
 }
 
@@ -250,7 +257,9 @@ prettyPrint(tree.tree)
 // tree.preorder(tree.root())
 // tree.postorder(tree.root())
 // tree.height(50)
-console.log(tree.height(50))
-tree.height(50)
+// console.log(tree.height(50))
+// tree.height(50)
 // tree.depth(123)
+// tree.isBalanced()
+// console.log(tree.isBalanced())
 
