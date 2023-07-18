@@ -92,20 +92,14 @@ class Tree {
         }
     }
 
-    find(value) {
-        return this.findRec(this.tree, value)
-    }
-
-    findRec(root, key) {
-        if (root.data === key) {
+    find(value, root = this.tree) {
+        if (root.data == value) {
             return root
         }
-        if (root.data > key) {
-            this.findRec(root.left, key)
-            return root
-        } else if (root.data < key) {
-            this.findRec(root.right, key)
-            return root
+        if (value > root.data) {
+            return this.find(value, root.right)
+        } else if (value < root.data) {
+            return this.find(value, root.left)
         }
     }
 
@@ -136,16 +130,14 @@ class Tree {
         return this.levelOrder(queue[0], queue)
     }
 
-    inorder(tree) {
-        if (!tree) {
-            return this.array
-        }
+    inorder(tree, final = []) {
         if (tree == null) {
-            return
+            return []
         }
-        this.inorder(tree.left)
-        console.log(tree.data)
-        this.inorder(tree.right)
+        if (tree.left !== null) { this.inorder(tree.left, final) }
+        final.push(tree.data)
+        if (tree.right !== null) { this.inorder(tree.right, final) }
+        return final
     }
 
     preorder(tree) {
@@ -177,18 +169,21 @@ class Tree {
     }
 
     heightRec(tree, node, found = false) {
-        if (found === false) {
+        if (found == false) {
             tree = this.find(node)
             found = true
             return this.heightRec(tree, node, found)
         }
         if (tree == null || (tree.left == null && tree.right == null)) {
-            return 0
+            return 1
         }
         let left = this.heightRec(tree.left, node, found)
         let right = this.heightRec(tree.right, node, found)
-        // console.log('tree', tree.data)
-        return Math.max(left, right) + 1
+        if (left > right) {
+            return left + 1
+        } else {
+            return right + 1
+        }
     }
 
     depth(node) {
@@ -207,15 +202,19 @@ class Tree {
         return
     }
 
-    isBalanced(root = this.tree) {
-        console.log(root.left.data)
-        const left = this.height(root.left.data)
-        const right = this.height(root.right.data)
-        console.log(left)
+    isBalanced() {
+        const left = this.heightRec(this.tree, this.tree.left.data)
+        const right = this.heightRec(this.tree, this.tree.right.data)
+        if (Math.abs(left - right) < 1) {
+            return true
+        } else {
+            return false
+        }
     }
 
     rebalance() {
-        this.array = this.inorder()
+        let sorted = this.inorder(this.tree)
+        this.sorted = sorted
         return this.tree = this.root()
     }
 }
@@ -235,9 +234,6 @@ function buildTree(array, start, end) {
 }
 
 const prettyPrint = (node, prefix = "", isLeft = true) => {
-    if (node === null) {
-        return;
-    }
     if (node.right !== null) {
         prettyPrint(node.right, `${prefix}${isLeft ? "│   " : "    "}`, false);
     }
@@ -246,6 +242,5 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
         prettyPrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true);
     }
 };
-
 
 export { Tree, prettyPrint }

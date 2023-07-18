@@ -23,7 +23,7 @@ function testTree() {
     tree.postorder(tree.tree)
 
     console.log('////INORDER////')
-    tree.inorder(tree.tree)
+    console.log(tree.inorder(tree.tree))
 
     tree.insert(110)
     tree.insert(200)
@@ -34,8 +34,23 @@ function testTree() {
     tree.inorder(tree.tree)
 
     prettyPrint(tree.tree)
-    console.log('balanced?')
-    tree.isBalanced()
+    console.log('IS BALANACED?', tree.isBalanced())
+    console.log("////Rebalncing Tree!////")
+    tree.rebalance()
+    prettyPrint(tree.tree)
+    console.log('is balanced?', tree.isBalanced())
+
+    console.log('////LEVELORDER////')
+    tree.levelOrder(tree.tree)
+
+    console.log('////PREORDER////')
+    tree.preorder(tree.tree)
+
+    console.log('////POSTORDER////')
+    tree.postorder(tree.tree)
+
+    console.log('////INORDER////')
+    console.log(tree.inorder(tree.tree))
 }
 
 testTree()
