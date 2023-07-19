@@ -11,7 +11,7 @@ function testTree() {
     const tree = new Tree(randomArray(20))
     prettyPrint(tree.tree)
 
-    console.log('IS BALANCED:', tree.isBalanced())
+    console.log('Is balanced:', tree.isBalanced())
 
     console.log('////LEVELORDER////')
     tree.levelOrder(tree.tree)
@@ -34,11 +34,13 @@ function testTree() {
     tree.inorder(tree.tree)
 
     prettyPrint(tree.tree)
-    console.log('IS BALANACED?', tree.isBalanced())
+    console.log('Is balanced:', tree.isBalanced())
+    
     console.log("////Rebalncing Tree!////")
     tree.rebalance()
+    
     prettyPrint(tree.tree)
-    console.log('is balanced?', tree.isBalanced())
+    console.log('Is balanced:', tree.isBalanced())
 
     console.log('////LEVELORDER////')
     tree.levelOrder(tree.tree)
