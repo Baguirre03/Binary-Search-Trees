@@ -1,6 +1,6 @@
 # Binary-Search-Trees
 
-### [**Link to Assignment**](https://www.theodinproject.com/lessons/javascript-binary-search-trees)
+#### [**Link to Assignment**](https://www.theodinproject.com/lessons/javascript-binary-search-trees)
 
 Binary search trees - where you take a group of data items and turn them into a tree full of nodes, where each left node is "lower" than each right node.
 
@@ -34,4 +34,4 @@ Here I wrote a driver script inside of `driver.js` where I did the following:
 7. Confirm the tree has been balanced with `isBalanced`
 8. Print out all elements again in level, pre, post, and in order
 
-### _All of this is ran inside of `driver.js` and can be ran with `node driver.js` to be shown within the terminal_
+#### _All of this is ran inside of `driver.js` and can be ran with `node driver.js` to be shown within the terminal_
